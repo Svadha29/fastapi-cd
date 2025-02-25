@@ -1,0 +1,19 @@
+name: Docker Image Build and Push
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        run: echo ${{ secrets.DOCKERTOKEN }} | docker login -u "<your-dockerhub-username>" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t <your-dockerhub-username>/fastapi-cd:latest .
+
+      - name: Push Docker Image
+        run: docker push <your-dockerhub-username>/fastapi-cd:latest
